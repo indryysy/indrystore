@@ -3,13 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Payment Indry Store</title>
+<title>Payment Indry Store - Telegram : @indryysy</title>
 
 <style>
 :root{
   --theme:#00bfff;
   --accent:#00f0ff;
-  --dark:#001d3d;
 }
 
 body{
@@ -32,12 +31,39 @@ video{
   min-height:100%;
   transform:translate(-50%,-50%);
   object-fit:cover;
-  object-position:center center; /* fokus tengah video */
-  z-index:-2;
+  object-position:center center;
+  z-index:-3;
   filter:brightness(0.3) saturate(1.2);
 }
 
-/* Partikel Neon Bergerak */
+/* BLUE FLAME EFFECT */
+.flame {
+  position:fixed;
+  bottom:0;
+  left:50%;
+  width:300px;
+  height:300px;
+  pointer-events:none;
+  z-index:-2;
+  transform:translateX(-50%);
+}
+.flame div{
+  position:absolute;
+  bottom:0;
+  width:6px;
+  height:60px;
+  background: linear-gradient(to top, #00bfff, rgba(0,191,255,0));
+  border-radius:50%;
+  opacity:0.8;
+  animation:flameAnim linear infinite;
+}
+@keyframes flameAnim{
+  0% {transform: translateY(0) scaleX(1);}
+  50% {transform: translateY(-50px) scaleX(0.7);}
+  100% {transform: translateY(0) scaleX(1);}
+}
+
+/* Partikel Neon */
 .particles{
   position:fixed;
   width:100%;
@@ -73,7 +99,6 @@ video{
   box-shadow:0 0 40px var(--theme);
   animation:fadeIn 1.5s ease;
 }
-
 .card:hover{
   box-shadow:
     0 0 15px #00bfff,
@@ -183,13 +208,16 @@ button:hover{
   <source src="https://files.catbox.moe/pjnzdl.mp4" type="video/mp4">
 </video>
 
+<!-- BLUE FLAME -->
+<div class="flame" id="blueFlame"></div>
+
 <!-- Partikel Neon -->
 <div class="particles" id="particles"></div>
 
 <div class="card">
   <img src="https://files.catbox.moe/hqh1zx.jpg" class="profile">
-  <h2>Payment Indry Store</h2>
-  <p>Silakan transfer sesuai nominal</p>
+  <h2><b>Payment Indry Store</b></h2>
+  <p><b>Silakan transfer sesuai nominal</b></p>
 
   <button class="btn-dana" onclick="copyDana()">Dana: 083140795921</button>
   <button class="btn-gopay" onclick="copyGopay()">GoPay: 08385369135</button>
@@ -236,6 +264,16 @@ for(let i=0;i<80;i++){
   p.style.width=2+Math.random()*3+'px';
   p.style.height=2+Math.random()*3+'px';
   particlesContainer.appendChild(p);
+}
+
+// BLUE FLAME DYNAMIC
+const flameContainer = document.getElementById('blueFlame');
+for(let i=0;i<40;i++){
+  const f = document.createElement('div');
+  f.style.left=Math.random()*100+'%';
+  f.style.animationDuration = 1 + Math.random()*1.5 + 's';
+  f.style.height = 40 + Math.random()*40 + 'px';
+  flameContainer.appendChild(f);
 }
 </script>
 
