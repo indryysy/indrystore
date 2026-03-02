@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Indry Store</title>
+
+<style>
+:root{
+  --theme:#00bfff;
+}
+
+body{
+  margin:0;
+  font-family:Arial;
+  background:black;
+  color:white;
+  overflow:hidden;
+  text-align:center;
+}
+
+/* VIDEO BACKGROUND */
+video{
+  position:fixed;
+  right:0;
+  bottom:0;
+  min-width:100%;
+  min-height:100%;
+  object-fit:cover;
+  z-index:-1;
+  filter:brightness(0.4);
+}
+
+.card{
+  width:340px;
+  margin:120px auto;
+  padding:30px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(20px);
+  box-shadow:0 0 40px var(--theme);
+}
+
+.profile{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid var(--theme);
+  box-shadow:0 0 20px var(--theme);
+}
+
+button{
+  width:100%;
+  padding:12px;
+  margin-top:12px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.btn-dana{
+  background:white;
+}
+
+.btn-gopay{
+  background:#00aa13;
+  color:white;
+}
+
+.btn-qris{
+  background:var(--theme);
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.85);
+  justify-content:center;
+  align-items:center;
+}
+
+.modal img{
+  width:300px;
+  border-radius:20px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- VIDEO BACKGROUND -->
+<video autoplay muted loop>
+  <source src="https://files.catbox.moe/pjnzdl.mp4" type="video/mp4">
+</video>
+
+<div class="card">
+
+<img src="https://files.catbox.moe/hqh1zx.jpg" class="profile">
+
+<h2>Payment Indry Store</h2>
+<p>Silakan transfer sesuai nominal</p>
+
+<button class="btn-dana" onclick="copyDana()">
+Dana: 083140795921
+</button>
+
+<button class="btn-gopay" onclick="copyGopay()">
+GoPay: 08385369135
+</button>
+
+<button class="btn-qris" onclick="openQR()">
+Tampilkan QRIS
+</button>
+
+</div>
+
+<div class="modal" id="qrisModal" onclick="closeQR()">
+<img src="https://files.catbox.moe/kff78o.jpg">
+</div>
+
+<script>
+function copyDana(){
+navigator.clipboard.writeText("083140795921");
+alert("Nomor Dana disalin!");
+}
+
+function copyGopay(){
+navigator.clipboard.writeText("08385369135");
+alert("Nomor GoPay disalin!");
+}
+
+function openQR(){
+document.getElementById("qrisModal").style.display="flex";
+}
+
+function closeQR(){
+document.getElementById("qrisModal").style.display="none";
+}
+</script>
+
+</body>
+  </html>
