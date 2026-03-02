@@ -8,12 +8,14 @@
 <style>
 :root{
   --theme:#00bfff;
+  --accent:#00f0ff;
+  --dark:#001d3d;
 }
 
 body{
   margin:0;
-  font-family:Arial;
-  background:black;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(135deg,#000814,#001d3d);
   color:white;
   overflow:hidden;
   text-align:center;
@@ -22,23 +24,62 @@ body{
 /* VIDEO BACKGROUND */
 video{
   position:fixed;
-  right:0;
-  bottom:0;
+  top:50%;
+  left:50%;
+  width:auto;
+  height:100%;
   min-width:100%;
   min-height:100%;
+  transform:translate(-50%,-50%);
   object-fit:cover;
-  z-index:-1;
-  filter:brightness(0.4);
+  object-position:center center; /* fokus tengah video */
+  z-index:-2;
+  filter:brightness(0.3) saturate(1.2);
 }
 
+/* Partikel Neon Bergerak */
+.particles{
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  z-index:-1;
+  pointer-events:none;
+}
+.particle{
+  position:absolute;
+  width:3px;
+  height:3px;
+  background:var(--theme);
+  border-radius:50%;
+  opacity:0.7;
+  animation:moveParticle linear infinite;
+}
+@keyframes moveParticle{
+  0%{transform:translateY(0px);}
+  100%{transform:translateY(800px);}
+}
+
+/* CARD */
 .card{
   width:340px;
   margin:120px auto;
   padding:30px;
   border-radius:20px;
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(20px);
+  background:rgba(0,191,255,0.08);
+  backdrop-filter:blur(25px);
+  border:1px solid rgba(0,191,255,0.4);
   box-shadow:0 0 40px var(--theme);
+  animation:fadeIn 1.5s ease;
+}
+
+.card:hover{
+  box-shadow:
+    0 0 15px #00bfff,
+    0 0 30px #00f0ff,
+    0 0 50px #00bfff;
+  transition:0.5s;
 }
 
 .profile{
@@ -47,9 +88,14 @@ video{
   border-radius:50%;
   object-fit:cover;
   border:3px solid var(--theme);
-  box-shadow:0 0 20px var(--theme);
+  box-shadow:0 0 25px var(--theme);
 }
 
+h2{
+  color:var(--theme);
+}
+
+/* BUTTONS */
 button{
   width:100%;
   padding:12px;
@@ -58,34 +104,74 @@ button{
   border-radius:12px;
   cursor:pointer;
   font-weight:bold;
+  font-size:16px;
+  transition:0.3s;
+  background-size:200% 200%;
+}
+button:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 15px var(--theme);
 }
 
+/* Gradient Neon Buttons */
 .btn-dana{
-  background:white;
+  background:linear-gradient(90deg,#00bfff,#00f0ff,#00bfff);
+  color:#001f3f;
+  animation:gradientBG 3s ease infinite;
 }
-
 .btn-gopay{
-  background:#00aa13;
+  background:linear-gradient(90deg,#008cff,#00bfff,#008cff);
   color:white;
+  animation:gradientBG 3s ease infinite;
 }
-
 .btn-qris{
-  background:var(--theme);
+  background:linear-gradient(90deg,#00bfff,#00f0ff,#00bfff);
+  color:#001f3f;
+  animation:gradientBG 3s ease infinite;
+}
+@keyframes gradientBG{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
 }
 
+/* MODAL POP-UP QRIS */
 .modal{
   display:none;
   position:fixed;
+  top:0;
+  left:0;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.85);
+  background:rgba(0,0,30,0.85);
   justify-content:center;
   align-items:center;
+  animation:fadeInModal 0.3s ease;
+  z-index:999;
 }
-
 .modal img{
   width:300px;
   border-radius:20px;
+  box-shadow:0 0 30px var(--theme);
+  transform:scale(0);
+  transition:0.4s;
+}
+
+/* Animasi */
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
+}
+@keyframes fadeInModal{
+  from{opacity:0;}
+  to{opacity:1;}
+}
+
+/* Responsif HP */
+@media (max-width:400px){
+  .card{width:90%; margin:80px auto; padding:20px;}
+  button{padding:14px; font-size:18px;}
+  .profile{width:100px; height:100px;}
 }
 </style>
 </head>
@@ -97,48 +183,59 @@ button{
   <source src="https://files.catbox.moe/pjnzdl.mp4" type="video/mp4">
 </video>
 
+<!-- Partikel Neon -->
+<div class="particles" id="particles"></div>
+
 <div class="card">
+  <img src="https://files.catbox.moe/hqh1zx.jpg" class="profile">
+  <h2>Payment Indry Store</h2>
+  <p>Silakan transfer sesuai nominal</p>
 
-<img src="https://files.catbox.moe/hqh1zx.jpg" class="profile">
-
-<h2>Payment Indry Store</h2>
-<p>Silakan transfer sesuai nominal</p>
-
-<button class="btn-dana" onclick="copyDana()">
-Dana: 083140795921
-</button>
-
-<button class="btn-gopay" onclick="copyGopay()">
-GoPay: 08385369135
-</button>
-
-<button class="btn-qris" onclick="openQR()">
-Tampilkan QRIS
-</button>
-
+  <button class="btn-dana" onclick="copyDana()">Dana: 083140795921</button>
+  <button class="btn-gopay" onclick="copyGopay()">GoPay: 08385369135</button>
+  <button class="btn-qris" onclick="openQR()">Tampilkan QRIS</button>
 </div>
 
+<!-- MODAL POP-UP -->
 <div class="modal" id="qrisModal" onclick="closeQR()">
-<img src="https://files.catbox.moe/kff78o.jpg">
+  <img src="https://files.catbox.moe/kff78o.jpg">
 </div>
 
 <script>
+// COPY NOMOR
 function copyDana(){
-navigator.clipboard.writeText("083140795921");
-alert("Nomor Dana disalin!");
+  navigator.clipboard.writeText("083140795921");
+  alert("Nomor Dana disalin!");
 }
-
 function copyGopay(){
-navigator.clipboard.writeText("08385369135");
-alert("Nomor GoPay disalin!");
+  navigator.clipboard.writeText("08385369135");
+  alert("Nomor GoPay disalin!");
 }
 
+// MODAL QRIS
 function openQR(){
-document.getElementById("qrisModal").style.display="flex";
+  const modal = document.getElementById("qrisModal");
+  modal.style.display="flex";
+  const img = modal.querySelector('img');
+  setTimeout(()=>{img.style.transform="scale(1)";},10);
+}
+function closeQR(){
+  const modal = document.getElementById("qrisModal");
+  modal.style.display="none";
+  modal.querySelector('img').style.transform="scale(0)";
 }
 
-function closeQR(){
-document.getElementById("qrisModal").style.display="none";
+// PARTIKEL
+const particlesContainer = document.getElementById('particles');
+for(let i=0;i<80;i++){
+  const p=document.createElement('div');
+  p.classList.add('particle');
+  p.style.left=Math.random()*100+'%';
+  p.style.top=Math.random()*-100+'px';
+  p.style.animationDuration=2+Math.random()*4+'s';
+  p.style.width=2+Math.random()*3+'px';
+  p.style.height=2+Math.random()*3+'px';
+  particlesContainer.appendChild(p);
 }
 </script>
 
